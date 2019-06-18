@@ -46,7 +46,6 @@ def hit?(total)
     total += deal_card
   else
     invalid_command
-    prompt_user
   end
   total
 end
@@ -61,17 +60,15 @@ end
 #####################################################
 
 def runner
+  welcome
   total = initial_round
-  prompt_user
-  val = hit? total
+  prev_total = total
   until total > 21 do
-    while val == "s" do
-      val = hit? total
-    end
-    if val == "h"
-      total += deal_card
+    total = hit? total
+    if total > prev_total
       display_card_total total
+      prev_total = total
     end
   end
-  end_game
+  end_game total
 end
